@@ -17,7 +17,7 @@ namespace {
         }
         const auto stop = steady_clock::now();
 
-        return static_cast<double>(duration_cast<DurationType>(stop - start).count()) / (count + 1);
+        return static_cast<double>(duration_cast<DurationType>(stop - start).count()) / count;
     }
 
     template<class ClockType, class DurationType>
