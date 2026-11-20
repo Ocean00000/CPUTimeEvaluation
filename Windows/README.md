@@ -31,7 +31,7 @@ Windows の `GetProcessTimes` API を利用して、プロセスのカーネル�
 
 ## ビルドと実行
 
-1. `CPUTimeEvaluation/CPUTimeEvaluation.sln`（または `.vcxproj`）を Visual Studio で開きます。
+1. `CPUTimeEvaluation.sln`（または `.vcxproj`）を Visual Studio で開きます。
 2. ソリューションをビルドします。
 3. 生成された実行ファイルを実行します。
 
