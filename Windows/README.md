@@ -1,4 +1,4 @@
-# TimeEvaluation
+# CPUTimeEvaluation
 
 Windows の `GetProcessTimes` API を利用して、プロセスのカーネル時間・ユーザー時間を計測するクロック（`std::chrono` 互換のカスタムクロック）の分解能（Resolution）とレイテンシ（Latency）を評価する C++ プロジェクトです。
 
@@ -18,10 +18,10 @@ Windows の `GetProcessTimes` API を利用して、プロセスのカーネル�
 
 | ファイル | 説明 |
 |---|---|
-| `CPUTimeEvaluation/CPUTimeEvaluation/CPUTimeEvaluation.cpp` | エントリポイント。計測処理と結果出力を行う |
-| `CPUTimeEvaluation/CPUTimeEvaluation/FunctionClock.hpp` | `GetProcessTimes` を利用したカスタムクロックの定義 |
-| `CPUTimeEvaluation/CPUTimeEvaluation/TimerName.hpp` | クロックの表示名を取得するユーティリティ |
-| `CPUTimeEvaluation/CPUTimeEvaluation/Unit.hpp` | 計測単位の表示名を取得するユーティリティ |
+| `CPUTimeEvaluation/CPUTimeEvaluation.cpp` | エントリポイント。計測処理と結果出力を行う |
+| `CPUTimeEvaluation/FunctionClock.hpp` | `GetProcessTimes` を利用したカスタムクロックの定義 |
+| `CPUTimeEvaluation/TimerName.hpp` | クロックの表示名を取得するユーティリティ |
+| `CPUTimeEvaluation/Unit.hpp` | 計測単位の表示名を取得するユーティリティ |
 
 ## 動作環境
 
