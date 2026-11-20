@@ -1,48 +1,39 @@
 # CPUTimeEvaluation
 
-macOS の `times()` API（`sys/times.h`）を利用して、プロセスのカーネル時間・ユーザー時間を計測するクロック（`std::chrono` 互換のカスタムクロック）の分解能（Resolution）とレイテンシ（Latency）を評価する C++ プロジェクトです。
+各プラットフォームで利用可能な時刻取得 API を `std::chrono` 互換のカスタムクロックとしてラップし、その**分解能（Resolution）**と**レイテンシ（Latency）**を計測・評価する C++ プロジェクトです。
 
 ## 概要
 
-本プロジェクトでは、以下の2種類のカスタムクロックを定義し、それぞれの性能を計測します。
-
-- `times_kernel_function_clock` : プロセスのカーネルモード実行時間を返すクロック
-- `times_user_function_clock` : プロセスのユーザーモード実行時間を返すクロック
-
-実行すると、各クロックについて以下の2つの指標を計測し、CSV形式で標準出力に出力します。
+時刻取得 API は種類によって精度・コストが大きく異なります。本プロジェクトでは各 API を統一インターフェースのクロックとして実装し、以下の2指標を CSV 形式で出力することで横断的な比較を可能にします。
 
 - **Resolution（分解能）** : クロックの値が変化する最小の時間間隔
-- **Latency（レイテンシ）** : クロックの `now()` 呼び出し1回あたりの所要時間
+- **Latency（レイテンシ）** : `now()` 呼び出し1回あたりの所要時間
 
 ## プロジェクト構成
 
-| ファイル | 説明 |
-|---|---|
-| `CPUTimeEvaluation/main.cpp` | エントリポイント。計測処理と結果出力を行う |
-| `CPUTimeEvaluation/FunctionClock.hpp` | `times()` を利用したカスタムクロックの定義 |
-| `CPUTimeEvaluation/TimerName.hpp` | クロックの表示名を取得するユーティリティ |
-| `CPUTimeEvaluation/Unit.hpp` | 計測単位の表示名を取得するユーティリティ |
+| ディレクトリ | プラットフォーム | 使用 API |
+|---|---|---|
+| `Mac/` | macOS | `times()`（`sys/times.h`） |
+| `Windows/` | Windows | `GetProcessTimes` |
 
-## 動作環境
+### Mac
 
-- macOS
-- Xcode（C++17 以上を想定）
-- POSIX API（`sys/times.h` を使用）
+macOS の POSIX API `times()` を利用して、プロセスのカーネル時間・ユーザー時間を計測します。
 
-## ビルドと実行
+詳細は [Mac/README.md](Mac/README.md) を参照してください。
 
-1. `CPUTimeEvaluation.xcodeproj` を Xcode で開きます。
-2. ソリューションをビルドします。
-3. 生成された実行ファイルを実行します。
+### Windows（CPUTimeEvaluation）
 
-実行すると、以下のような形式で結果が標準出力に出力されます。
+Windows API `GetProcessTimes` を利用して、プロセスのカーネル時間・ユーザー時間を計測します。
+
+詳細は [Windows/README.md](Windows/README.md) を参照してください。
+
+
+## 出力形式
+
+いずれのプロジェクトも、実行すると以下の CSV 形式で標準出力に結果を出力します。
 
 ```
 Timer,Resolution,Unit,Latency,Unit
 <クロック名>,<分解能>,<単位>,<レイテンシ>,<単位>
 ```
-
-## 注意事項
-
-- 本プロジェクトは POSIX 準拠の `times()` API に依存しているため、macOS および Linux 環境でのみ動作します。
-- Windows 版は `Windows/` ディレクトリを参照してください。
